@@ -3,15 +3,22 @@ package dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import models.Site;
 import models.User;
 import neo4j.Types.NodeTypes;
+import neo4j.Types.RelationTypes;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
@@ -19,25 +26,30 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
+import org.neo4j.kernel.impl.util.FileUtils;
+import org.neo4j.test.TestGraphDatabaseFactory;
 
-public class TestUser {
+public class TestUsers {
 
 	static EmbeddedGraphDatabase graphDb;
 	static Index<Node> nodeIndex;
-	
-	@Before
-	public void prepareTestDatabase(){
+	static String pathDb;
+		
+	@BeforeClass
+	public static void prepareTestDatabase(){
 		
 //		ap<String, String> config = new HashMap<String, String>();
 //		config.put( "neostore.nodestore.db.mapped_memory", "10M" );
 //		config.put( "string_block_size", "60" );
 //		config.put( "array_block_size", "300" );
 //		GraphDatabaseService db = new ImpermanentGraphDatabase( config );
+
 		
-	    //graphDb = (EmbeddedGraphDatabase) new TestGraphDatabaseFactory().newImpermanentDatabaseBuilder().newGraphDatabase();
-		
-		graphDb = (EmbeddedGraphDatabase) new GraphDatabaseFactory()
-		.newEmbeddedDatabase("C:/neo4j");
+//	    graphDb = (EmbeddedGraphDatabase) new TestGraphDatabaseFactory().newImpermanentDatabaseBuilder().newGraphDatabase();	
+		pathDb = System.getProperty("user.dir") + "/Data/graph.db"; 
+		pathDb = pathDb.replace(File.separator, "/");
+		clearDb();
+		graphDb = (EmbeddedGraphDatabase) new GraphDatabaseFactory().newEmbeddedDatabase(pathDb);
 		nodeIndex = graphDb.index().forNodes("nodes");
 		registerShutdownHook(graphDb);
 		Transaction tx = graphDb.beginTx();
@@ -70,57 +82,39 @@ public class TestUser {
 		}		
 	}
 	
-	@After
-	public void destroyTestDatabase(){
+	@AfterClass
+	public static void destroyTestDatabase(){
 	    graphDb.shutdown();
 	}	
 	
 	@Test
 	public void registerUser(){
-		
+
 		User user = new User("1111", "Carlos", "http://www.as.com", 
-				"444.45", "222.23", graphDb, nodeIndex);
+				"444.45", "222.23");
+		user.putConectionInfo(graphDb, nodeIndex);
 		try {
-			user.register("idFacebook", "1111");
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo1");
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo2");
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo3");
+			user.register(NodeTypes.User);
+		}catch (Exception e) {
 			e.printStackTrace();
 		}   
 		Node foundNode = nodeIndex.get( "idFacebook","1111").getSingle();
 		//System.out.println( "The name of user carlos is " + foundNode.getProperty("name"));  	        	    		
-		assertEquals((String) foundNode.getProperty("name"),"Carlos");	 		 			      		  
-				
+		assertEquals((String) foundNode.getProperty("name"),"Carlos");	 	
 	}
 	@Test
 	public void updateUser(){
 		
 		User user = new User("2222", "Maria", "http://www.marca.com", 
-				"555.45", "333.23", graphDb, nodeIndex);
+				"555.45", "333.23");
+		user.putConectionInfo(graphDb, nodeIndex);
 		try {
-			user.register("idFacebook", "2222");
+			user.register(NodeTypes.User);
 			user = new User("2222", "Ana", "http://www.mundo.com", 
-					"666.45", "444.23", graphDb, nodeIndex);
-			user.register("idFacebook", "2222");
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo1");
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo2");
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo3");
+					"666.45", "444.23");
+			user.putConectionInfo(graphDb, nodeIndex);
+			user.register(NodeTypes.User);
+		}catch (Exception e) {
 			e.printStackTrace();
 		}			      		
 		IndexHits<Node> nodes = nodeIndex.get( "idFacebook","2222");
@@ -129,26 +123,17 @@ public class TestUser {
     	Node foundNode =nodes.getSingle();
 		//System.out.println( "The name of user carlos is " + foundNode.getProperty("name"));
   	        	    		
-		assertEquals((String) foundNode.getProperty("name"),"Ana");	 				
+		assertEquals((String) foundNode.getProperty("name"),"Ana");	 			
 	}
 	
 	@Test
 	public void  initThroughNode(){
 		User user = new User("3333", "Juan", "http://www.sport.com", 
-				"777.45", "555.23", graphDb, nodeIndex);
+				"777.45", "555.23");
+		user.putConectionInfo(graphDb, nodeIndex);
 		try {
-			user.register("idFacebook", "3333");			
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo1");
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo2");
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			System.out.println("fallo3");
+			user.register(NodeTypes.User);			
+		}catch (Exception e) {		
 			e.printStackTrace();
 		}				      
 		Node foundNode = nodeIndex.get("idFacebook","3333").getSingle();
@@ -162,20 +147,70 @@ public class TestUser {
 			
 			assertEquals((String) foundNode.getProperty("name"), user2.getName());	
 			
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}	
 	}
 	
-	private static void registerShutdownHook( final GraphDatabaseService graphDb )
-	{
+	@Test
+	public void createRelationship(){
+		
+		User user = new User("4444", "Mario", "http://www.000.com", 
+				"000.45", "001.33");
+		user.putConectionInfo(graphDb, nodeIndex);
+		User user2 = new User("5555", "Paco", "http://www.000.com", 
+				"000.45", "002.33");
+		user2.putConectionInfo(graphDb, nodeIndex);
+		
+		try {
+			user.register(NodeTypes.User);
+			user2.register(NodeTypes.User);
+			user.createRelationship("idFacebook", "5555", RelationTypes.Knows);
+	    	user2.createRelationship("idFacebook", "4444", RelationTypes.Knows);
+	    	
+	    	Node foundNode = nodeIndex.get("idFacebook","4444").getSingle();		
+	    	assertEquals(foundNode.hasRelationship(RelationTypes.Knows, Direction.BOTH), true);	
+	    	
+	    	Node foundNode2 = nodeIndex.get("idFacebook","5555").getSingle();		
+	    	assertEquals(foundNode2.hasRelationship(RelationTypes.Knows, Direction.BOTH), true);    	
+	    	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void getUserFriends(){
+		
+		User user = new User("1000", "Ralph", "http://www.000.com", 
+				"000.45", "000.23");
+		user.putConectionInfo(graphDb, nodeIndex);
+		User user1 = new User("1001", "Bart", "http://www.000.com", 
+				"000.45", "000.23");
+		user1.putConectionInfo(graphDb, nodeIndex);
+		User user2 = new User("1002", "Lisa", "http://www.000.com", 
+				"000.45", "000.23");
+		user2.putConectionInfo(graphDb, nodeIndex);
+	
+		try {
+			user.register(NodeTypes.User);
+			user1.register(NodeTypes.User);
+			user2.register(NodeTypes.User);
+			user.createRelationship("idFacebook", "1001", RelationTypes.Knows);
+			user1.createRelationship("idFacebook", "1000", RelationTypes.Knows);
+			user.createRelationship("idFacebook", "1002", RelationTypes.Knows);
+			user2.createRelationship("idFacebook", "1000", RelationTypes.Knows);
+		
+			
+			List<User> list = (List<User>) user.getEndEntitiesOfMyRelationships(RelationTypes.Knows);
+			assertEquals(list.size(),2);
+						
+		}catch (Exception e) {			
+			e.printStackTrace();
+		}						
+	}
+	
+	private static void registerShutdownHook( final GraphDatabaseService graphDb ){
 	    // Registers a shutdown hook for the Neo4j instance so that it
 	    // shuts down nicely when the VM exits (even if you "Ctrl-C" the
 	    // running example before it's completed)
@@ -188,4 +223,12 @@ public class TestUser {
 	        }
 	    } );
 	}
+	private static void clearDb(){
+        try{
+            FileUtils.deleteRecursively(new File(pathDb));
+        }
+        catch ( IOException e ){
+            throw new RuntimeException( e );
+        }
+    }
 }

@@ -4,9 +4,9 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
-import dao.UserDAOImpl;
+import dao.EntityDAOImpl;
 
-public class User  extends UserDAOImpl{
+public class User extends EntityDAOImpl{
 
 	private String idFacebook;
 	private String name;
@@ -14,21 +14,31 @@ public class User  extends UserDAOImpl{
 	private String positionX;
 	private String positionY;
 	
+	public User(){
+		super();
+		
+	}
+	
 	public User(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex) {
 		this.graphDb = graphDb;
 		this.nodeIndex = nodeIndex;
 	}
 	
 	public User(String idFacebook, String name, String urlPhoto,
-			String positionX, String positionY, EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex) {
+			String positionX, String positionY) {
 		super();
 		this.idFacebook = idFacebook;
 		this.name = name;
 		this.urlPhoto = urlPhoto;
 		this.positionX = positionX;
 		this.positionY = positionY;
-		this.graphDb = graphDb;
-		this.nodeIndex = nodeIndex;
+	}
+	
+	public User(String idFacebook, String name, String urlPhoto) {
+		super();
+		this.idFacebook = idFacebook;
+		this.name = name;
+		this.urlPhoto = urlPhoto;
 	}
 	
 	public void putConectionInfo(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){

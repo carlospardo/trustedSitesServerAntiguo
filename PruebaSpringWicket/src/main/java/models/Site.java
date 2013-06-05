@@ -1,15 +1,17 @@
 package models;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
-import dao.SiteDAOImpl;
+import dao.EntityDAOImpl;
 
-public class Site extends SiteDAOImpl{
+public class Site extends EntityDAOImpl{
 
 	private String idSite;
 	private String name;
@@ -18,16 +20,21 @@ public class Site extends SiteDAOImpl{
 	private String positionY;
 	private String info;
 	private String modifiedDate;
+	private String nameOwner;
+	private String ownerId;
 	
-	public Site( EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){
+	public Site(){
+		super();
+		
+	}
+	public Site(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){
 		super();
 		this.graphDb = graphDb;
 		this.nodeIndex = nodeIndex;
 	}
 	
 	public Site(String idSite, String name, String urlPhoto, String positionX,
-			String positionY, String info, EmbeddedGraphDatabase graphDb, 
-			Index<Node> nodeIndex) {
+			String positionY, String info, String nameOwner, String ownerId) {
 		super();
 		this.idSite = idSite;
 		this.name = name;
@@ -36,9 +43,21 @@ public class Site extends SiteDAOImpl{
 		this.positionY = positionY;
 		this.info = info;
 		this.modifiedDate = this.obtainTimestamp();
-		this.graphDb = graphDb;
-		this.nodeIndex = nodeIndex;
+		this.nameOwner= nameOwner;
+		this.ownerId = ownerId;
 	}
+	
+	public Site(String idSite, String name, String urlPhoto, String positionX,
+			String positionY, String nameOwner) {
+		super();
+		this.idSite = idSite;
+		this.name = name;
+		this.urlPhoto = urlPhoto;
+		this.positionX = positionX;
+		this.positionY = positionY;
+		this.nameOwner= nameOwner;
+	}
+	
 	public void putConectionInfo(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){
 		this.graphDb = graphDb;
 		this.nodeIndex = nodeIndex;
@@ -92,6 +111,20 @@ public class Site extends SiteDAOImpl{
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	
 
+	public String getNameOwner() {
+		return nameOwner;
+	}
+
+	public void setNameOwner(String nameOwner) {
+		this.nameOwner = nameOwner;
+	}
+
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
 }
