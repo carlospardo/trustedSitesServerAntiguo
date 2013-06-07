@@ -1,17 +1,10 @@
-package models;
+package modelsTest;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.index.Index;
-import org.neo4j.kernel.EmbeddedGraphDatabase;
 
-import dao.EntityDAOImpl;
-
-public class Site extends EntityDAOImpl{
+public class Site {
 
 	private String idSite;
 	private String name;
@@ -25,12 +18,6 @@ public class Site extends EntityDAOImpl{
 	
 	public Site(){
 		super();
-		
-	}
-	public Site(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){
-		super();
-		this.graphDb = graphDb;
-		this.nodeIndex = nodeIndex;
 	}
 	
 	public Site(String idSite, String name, String urlPhoto, String positionX,
@@ -48,7 +35,7 @@ public class Site extends EntityDAOImpl{
 	}
 	
 	public Site(String idSite, String name, String urlPhoto, String positionX,
-			String positionY, String nameOwner, String ownerId) {
+			String positionY, String nameOwner) {
 		super();
 		this.idSite = idSite;
 		this.name = name;
@@ -56,13 +43,8 @@ public class Site extends EntityDAOImpl{
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.nameOwner= nameOwner;
-		this.ownerId = ownerId;
 	}
-	
-	public void putConectionInfo(EmbeddedGraphDatabase graphDb, Index<Node> nodeIndex){
-		this.graphDb = graphDb;
-		this.nodeIndex = nodeIndex;
-	}
+
 	public String obtainTimestamp() {		
 		Date utilDate = new java.util.Date();
 		Timestamp timestamp = new Timestamp(utilDate.getTime());
