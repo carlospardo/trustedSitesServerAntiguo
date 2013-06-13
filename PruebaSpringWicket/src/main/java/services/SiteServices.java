@@ -33,7 +33,12 @@ public class SiteServices {
 				"\nPARAMETERS: site.getName()= " + site.getName() + " idFacebook="+idFacebook);
 		useConnection();
 		
-		site.putConectionInfo(graphDb, nodeIndex);		
+		Node foundNode = nodeIndex.get("idFacebook",idFacebook).getSingle();
+		User user = new User(graphDb, nodeIndex);
+		user.initThroughNode(foundNode);
+		
+		site.setNameOwner(user.getName());		
+		site.putConectionInfo(graphDb, nodeIndex);
 		site.register(NodeTypes.Site);
 		site.createRelationship("idFacebook", idFacebook, RelationTypes.Owns);		
 		

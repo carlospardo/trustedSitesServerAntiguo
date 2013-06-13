@@ -54,10 +54,16 @@ public class TestWebServices {
 	@Test
 	public void registerSite(){
 				
-		Site site = new Site("5", "Due Torri", "http://graph.facebook.com/434323479966340/picture?type=thumbnail", "3333.45", "4442", 
-				"Good place in the Bologna Center", "Carlos", "111");		
+//		Site site = new Site("5", "Due Torri", "http://graph.facebook.com/434323479966340/picture?type=thumbnail", "3333.45", "4442", 
+//				"Good place in the Bologna Center", "Carlos", "111");
+//		Site site = new Site("10", "Piazza Maggiore", "http://graph.facebook.com/285931851535123/picture?type=thumbnail",
+//				"44.493995", "11.343201", 
+//				"Good place in the Center", "Dogan", "544794145");
+		Site site = new Site("9", "Due Torri", "http://graph.facebook.com/50672883378/picture?type=square",
+				"44.494301", "11.346835", 
+				"Good place in the Center", "JCarlos Pardo Duran", "1523497691");
 		try {		
-			ApiHelpers.registerSite(site, "111");
+			ApiHelpers.registerSite(site, "1523497691");
 			assertTrue(true);								
 		} catch (Exception e) {
 			e.printStackTrace();
