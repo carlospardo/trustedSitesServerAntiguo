@@ -1,19 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import models.User;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import utilsTest.ApiHelpers;
-
-import com.google.gson.Gson;
 
 public class Prueba {
 
@@ -23,17 +11,16 @@ public class Prueba {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		
-
-		List<String> list = getListFriendsIds();
-		System.out.println("list.size(): " + list.size());
-		setFriendId("1");
-		removeFriendId("1");
-		List<String> list2 = getListFriendsIds();
-		System.out.println("list2.size(): " + list2.size());
-		setFriendId("1");
-		List<String> list3 = getListFriendsIds();
-		System.out.println("list3.size(): " + list3.size());
+		List<String> listSitesIds = new ArrayList<String>();		
+		String sitesIds = ":23:567:12:";
+		String[] s = sitesIds.split(":");
+		for (String id : s){
+			System.out.println("id: " + id);
+			if(!id.equals("")){
+				listSitesIds.add(id);
+			}
+		}
+		System.out.println(listSitesIds);
 		
 	}
 

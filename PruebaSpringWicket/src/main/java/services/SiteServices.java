@@ -1,8 +1,5 @@
 package services;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +11,7 @@ import neo4j.Types.NodeTypes;
 import neo4j.Types.RelationTypes;
 
 import org.apache.log4j.Logger;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
@@ -61,6 +56,7 @@ public class SiteServices {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Site> getMySites(String idFacebook) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		log.info("SERVICE: getMySites" +
@@ -76,6 +72,7 @@ public class SiteServices {
 		return listSites;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Site> getSitesNamesList(List<String> listFriendsIds) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		log.info("SERVICE: getSitesNamesList" +

@@ -8,19 +8,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.ObjectName;
-
 import junit.framework.Assert;
 
 import models.Site;
 import models.User;
 import neo4j.InitializeDB;
 import neo4j.Types.NodeTypes;
-import neo4j.Types.RelationTypes;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -29,10 +24,7 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
-import org.neo4j.test.TestGraphDatabaseFactory;
-import org.neo4j.kernel.GraphDatabaseAPI;
 import org.neo4j.kernel.impl.util.FileUtils;
-import org.neo4j.jmx.JmxUtils;
 
 import services.SiteServices;
 import services.UserServices;

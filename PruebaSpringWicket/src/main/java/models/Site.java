@@ -1,9 +1,7 @@
 package models;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;

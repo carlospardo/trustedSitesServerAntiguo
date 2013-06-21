@@ -19,8 +19,6 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
-import services.SiteServices;
-
 @JsonIgnoreProperties({ "fechaCreacion","fechaModificacion","fechaFinalizacion"})
 public abstract class EntityDAOImpl implements EntityDAO {
 

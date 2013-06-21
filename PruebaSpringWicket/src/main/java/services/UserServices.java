@@ -1,16 +1,11 @@
 package services;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.relation.RelationType;
-
 import org.apache.log4j.Logger;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
@@ -37,6 +32,7 @@ public class UserServices {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<User> getFriendsList(String idFacebook) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 				
 		log.info("SERVICE: getFriendsList" +

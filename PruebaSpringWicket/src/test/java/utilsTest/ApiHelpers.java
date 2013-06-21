@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import modelsTest.Site;
 import modelsTest.User;
@@ -15,11 +13,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -51,7 +47,6 @@ public class ApiHelpers {
 		HttpClient httpclient = new DefaultHttpClient(httpParameters);
 
 		request.setHeader("Content-Type", "application/json");
-		ResponseHandler<String> handler = new BasicResponseHandler();
 		
 		String result = "";
 		try {
@@ -92,7 +87,6 @@ public class ApiHelpers {
 
 			request.setEntity(se);
 			request.setHeader("Content-Type", "application/json");
-			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			HttpResponse response = httpclient.execute(request);
             result=Userrequest(response);

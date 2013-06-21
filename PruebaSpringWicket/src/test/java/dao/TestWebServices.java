@@ -2,7 +2,6 @@ package dao;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +11,7 @@ import modelsTest.Site;
 import modelsTest.User;
 
 import org.junit.Test;
-import org.neo4j.graphdb.Node;
 
-import services.SiteServices;
-import services.UserServices;
 import utilsTest.ApiHelpers;
 
 public class TestWebServices {

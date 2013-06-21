@@ -86,6 +86,7 @@ public class InitializeDB implements ServletContextListener {
 			}
 		});
 	}	
+	@SuppressWarnings("unused")
 	private static void clearDb(){
         try{
             FileUtils.deleteRecursively(new File(pathDb));

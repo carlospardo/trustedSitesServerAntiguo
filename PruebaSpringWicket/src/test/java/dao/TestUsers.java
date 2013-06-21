@@ -1,21 +1,16 @@
 package dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import models.Site;
 import models.User;
 import neo4j.Types.NodeTypes;
 import neo4j.Types.RelationTypes;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.Direction;
@@ -27,7 +22,6 @@ import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 import org.neo4j.kernel.impl.util.FileUtils;
-import org.neo4j.test.TestGraphDatabaseFactory;
 
 public class TestUsers {
 
@@ -179,6 +173,7 @@ public class TestUsers {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getUserFriends(){
 		

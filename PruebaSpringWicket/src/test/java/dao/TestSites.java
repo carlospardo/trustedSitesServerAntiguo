@@ -1,14 +1,9 @@
 package dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import models.Site;
@@ -16,15 +11,12 @@ import models.User;
 import neo4j.Types.NodeTypes;
 import neo4j.Types.RelationTypes;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
@@ -190,6 +182,7 @@ public class TestSites {
 		}		    							
 	}
 	//@Test
+	@SuppressWarnings("unchecked")
 	public void getUserSites(){
 		
 		User user = new User("0009", "Marcos", "http://www.000.com", 
